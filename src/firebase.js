@@ -11,13 +11,7 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-// The app runs in two modes:
-//  - "firebase" mode: a real .env with your Firebase project keys is present.
-//  - "demo" mode: no keys are set, so we fall back to a local, in-browser
-//    implementation (see src/services/localBackend.js) that mimics the same
-//    CRUD + auth interface. This lets the project run immediately after
-//    `npm install && npm run dev` with zero setup, while the real Firestore
-//    code path is fully implemented and ready for your own project keys.
+
 export const isFirebaseConfigured = Boolean(
   firebaseConfig.apiKey && firebaseConfig.projectId
 );
