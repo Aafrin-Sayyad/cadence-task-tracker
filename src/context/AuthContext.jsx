@@ -4,7 +4,7 @@ import { onAuthChange, signIn, signUp, signOutUser } from '../services/backend';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(undefined); // undefined = loading, null = signed out
+  const [user, setUser] = useState(undefined); 
 
   useEffect(() => {
     const unsub = onAuthChange(setUser);
