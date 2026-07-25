@@ -1,7 +1,3 @@
-// A minimal, dependency-free stand-in for Firebase Auth + Firestore.
-// Used automatically when no Firebase project keys are supplied (see firebase.js).
-// The shape of every exported function mirrors services/firestoreBackend.js
-// so the rest of the app never needs to know which backend is active.
 
 const USERS_KEY = 'cadence_demo_users';
 const SESSION_KEY = 'cadence_demo_session';
@@ -98,7 +94,7 @@ function emitTasks(uidFilter) {
   });
 }
 
-// Mirrors an onSnapshot-style subscription: where("uid", "==", uid)
+
 export function subscribeTasks(uidFilter, cb) {
   const entry = { uid: uidFilter, cb };
   taskListeners.add(entry);
