@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-// Sprint 16 — Phase 2: The AI Injection.
-// Calls the Vercel serverless function at /api/subtasks (never the AI
-// provider directly), so the API key never touches the browser bundle.
-// On mount it auto-generates; the user can regenerate or save the result
-// onto the task as a `subtasks` field via the existing updateTask() call.
-
 export default function AiSubtasksModal({ task, onClose, onSave }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -15,7 +9,7 @@ export default function AiSubtasksModal({ task, onClose, onSave }) {
 
   useEffect(() => {
     generate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, []);
 
   async function generate() {
