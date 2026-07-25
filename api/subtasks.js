@@ -1,27 +1,14 @@
-// Sprint 16 — Phase 2: The AI Injection.
-//
-// This is a Vercel Serverless Function, NOT client code. It runs on Node,
-// on Vercel's servers — never in the browser bundle. That's the whole point:
-// GEMINI_API_KEY lives only in Vercel's Environment Variables dashboard and
-// is never shipped to the client, so it can't be scraped out of dev tools
-// (see Sprint 16 FAQ #3).
-//
-// The React app calls this at POST /api/subtasks with { title, category }
-// and gets back { subtasks: string[] }.
-
 const GEMINI_MODEL = 'gemini-3.5-flash-lite';
 const MAX_TITLE_LENGTH = 200;
 
 export default async function handler(req, res) {
-  // ---- Method guard ----
+  
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
   }
 
-  // ---- Payload validation (this is what the Postman "malformed payload"
-  // demo is exercising: missing/empty/oversized title all get a clean 400,
-  // never a 500 or an unhandled crash). ----
+  
   const body = req.body || {};
   const { title, category } = body;
 
@@ -41,7 +28,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'AI is not configured on the server yet.' });
   }
 
-  // ---- Strict-JSON prompt (Sprint 16 FAQ #2) ----
+  
   const prompt = `You are an API. A student has a task titled "${title.trim()}"${
     category ? ` in the category "${category}"` : ''
   }. Break it into 3 to 5 short, concrete, actionable sub-steps a student could check off one by one.
