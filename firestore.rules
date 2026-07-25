@@ -1,7 +1,6 @@
 rules_version = '2';
 
-// Deploy with: firebase deploy --only firestore:rules
-// (requires the Firebase CLI and a firebase.json pointing at this file)
+
 service cloud.firestore {
   match /databases/{database}/documents {
 
