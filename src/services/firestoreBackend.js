@@ -46,9 +46,7 @@ export async function signOutUser() {
 }
 
 // ---------- Firestore CRUD ----------
-// Data-ownership pattern per Sprint 15 FAQ #3:
-// every document is written with the authenticated uid, and every
-// read query is filtered with where("uid", "==", currentUser.uid).
+
 
 const TASKS_COLLECTION = 'tasks';
 
@@ -87,8 +85,7 @@ export async function addTask(uidOwner, data) {
 }
 
 export async function updateTask(uidOwner, id, patch) {
-  // uidOwner is accepted for interface parity with localBackend; Firestore
-  // security rules (see firestore.rules) are what actually enforce ownership.
+  
   await updateDoc(doc(db, TASKS_COLLECTION, id), patch);
 }
 
