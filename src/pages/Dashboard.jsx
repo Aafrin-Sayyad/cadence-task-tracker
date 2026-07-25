@@ -20,7 +20,7 @@ export default function Dashboard() {
   const [deleting, setDeleting] = useState(null);
   const [aiTask, setAiTask] = useState(null);
 
-  // Data Hydration (Read): subscribe to only this user's documents.
+  
   useEffect(() => {
     if (!user) return;
     const unsub = subscribeTasks(user.uid, (rows) => {
@@ -31,7 +31,7 @@ export default function Dashboard() {
   }, [user]);
 
   async function handleCreate(data) {
-    // Payload Injection (Create): uid is stamped onto every new document.
+    
     try {
       await addTask(user.uid, data);
       toast.success('Task added.');
