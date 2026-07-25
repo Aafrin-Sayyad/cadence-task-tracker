@@ -1,12 +1,8 @@
-// Pure functions that turn raw task documents into chart-ready metrics.
-// Kept separate from components so they're easy to unit test.
+
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-// Builds a YYYY-MM-DD key from LOCAL date parts (not toISOString, which
-// converts to UTC and silently shifts the date by a day in timezones ahead
-// of UTC, e.g. IST). Keeping this consistent on both the bucket keys and
-// the completion-timestamp keys is what keeps the chart in sync.
+
 function localDateKey(d) {
   const yyyy = d.getFullYear();
   const mm = String(d.getMonth() + 1).padStart(2, '0');
@@ -14,7 +10,7 @@ function localDateKey(d) {
   return `${yyyy}-${mm}-${dd}`;
 }
 
-/** Tasks completed per day, over the trailing `days` days. */
+
 export function tasksCompletedByDay(tasks, days = 14) {
   const buckets = {};
   const today = new Date();
@@ -38,7 +34,7 @@ export function tasksCompletedByDay(tasks, days = 14) {
   return Object.values(buckets);
 }
 
-/** Count of tasks grouped by category, for a bar/pie chart. */
+
 export function tasksByCategory(tasks) {
   const counts = tasks.reduce((acc, t) => {
     const key = t.category || 'Uncategorized';
@@ -48,7 +44,7 @@ export function tasksByCategory(tasks) {
   return Object.entries(counts).map(([category, count]) => ({ category, count }));
 }
 
-/** Count of tasks grouped by status, for a donut/bar chart. */
+
 export function tasksByStatus(tasks) {
   const order = ['todo', 'in-progress', 'done'];
   const labels = { todo: 'To do', 'in-progress': 'In progress', done: 'Done' };
@@ -59,7 +55,7 @@ export function tasksByStatus(tasks) {
   return order.map((key) => ({ status: labels[key], count: counts[key] || 0 }));
 }
 
-/** High-level stats for the top stat cards. */
+
 export function summaryStats(tasks) {
   const total = tasks.length;
   const done = tasks.filter((t) => t.status === 'done').length;
