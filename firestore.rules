@@ -5,8 +5,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     match /tasks/{taskId} {
-      // Only signed-in users may read or write, and only documents
-      // that belong to them (the "uid" field stamped on create).
+      
       allow read: if request.auth != null && request.auth.uid == resource.data.uid;
 
       allow create: if request.auth != null
