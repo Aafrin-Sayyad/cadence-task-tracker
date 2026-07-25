@@ -9,7 +9,7 @@
 // The React app calls this at POST /api/subtasks with { title, category }
 // and gets back { subtasks: string[] }.
 
-const GEMINI_MODEL = 'gemini-2.0-flash';
+const GEMINI_MODEL = 'gemini-3.5-flash-lite';
 const MAX_TITLE_LENGTH = 200;
 
 export default async function handler(req, res) {
@@ -37,7 +37,6 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    // Missing env var on the server — fail cleanly instead of throwing.
     console.error('GEMINI_API_KEY is not set in the server environment.');
     return res.status(500).json({ error: 'AI is not configured on the server yet.' });
   }
@@ -52,10 +51,13 @@ Do not include markdown wrappers, backticks, explanations, or any other text bef
 
   try {
     const upstream = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': apiKey,
+        },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: { temperature: 0.4, maxOutputTokens: 400 },
@@ -72,8 +74,6 @@ Do not include markdown wrappers, backticks, explanations, or any other text bef
     const data = await upstream.json();
     const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
-    // Defensive cleanup: even with the strict-JSON instruction, models
-    // occasionally wrap output in ```json fences. Strip them before parsing.
     const cleaned = raw.replace(/```json/gi, '').replace(/```/g, '').trim();
 
     let parsed;
