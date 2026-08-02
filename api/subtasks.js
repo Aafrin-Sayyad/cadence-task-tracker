@@ -1,14 +1,3 @@
-// Sprint 16 — Phase 2: The AI Injection.
-//
-// This is a Vercel Serverless Function, NOT client code. It runs on Node,
-// on Vercel's servers — never in the browser bundle. That's the whole point:
-// GEMINI_API_KEY lives only in Vercel's Environment Variables dashboard and
-// is never shipped to the client, so it can't be scraped out of dev tools
-// (see Sprint 16 FAQ #3).
-//
-// The React app calls this at POST /api/subtasks with { title, category }
-// and gets back { subtasks: string[] }.
-
 const GEMINI_MODEL = 'gemini-3.5-flash-lite';
 const MAX_TITLE_LENGTH = 200;
 
