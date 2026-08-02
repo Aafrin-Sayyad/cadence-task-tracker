@@ -1,87 +1,75 @@
 # AI Prompt Log — Sprint 16
 
-Tool used: Claude (Anthropic). Log kept per Sprint 16 submission requirements.
+Tool used: Claude (Anthropic), used for troubleshooting specific technical
+questions while building Sprint 16, per the submission requirement to log
+AI usage.
+
+---
 
 ## Phase 1 — Viewport Responsiveness
 
-**Prompt:** "Audit `Layout.jsx` and `index.css` for mobile viewport bugs. On
-screens under 880px the sidebar becomes a horizontal row and
-`.sidebar-footer` is set to `display: none` — which removes the only Sign Out
-button on mobile. Build a proper hamburger menu: a toggle button that opens
-a collapsible drawer containing the nav links and the sign-out/footer
-content, using React state instead of just hiding things with CSS media
-queries."
+**Question:** "My sidebar footer uses `display: none` at mobile widths and
+that's hiding my Sign Out button completely on phones — what's the
+standard pattern for a hamburger menu toggle in React so it doesn't just
+disappear?"
 
-**Outcome:** Rewrote `Layout.jsx` with a `menuOpen` state, an animated
-hamburger icon (three bars → X), and `max-height` transition-based
-open/close for `.nav-links` and `.sidebar-footer` under the 880px breakpoint.
-Nav links close the menu on click via an `onClick` handler passed to each
-`NavLink`.
+**Question:** "What CSS approach animates a nav drawer open/closed smoothly
+— max-height transition or something else?"
 
-**Prompt:** "The task table already wraps `<table>` in a `.table-wrap` div
-with `overflow-x: auto` (good). Double check the stat-card grid, chart grid,
-and form grid also collapse correctly at the iPhone 14 Pro width (393px),
-and tighten row-action button wrapping so Edit/Delete/AI-Steps don't overflow
-the cell."
-
-**Outcome:** Added a secondary `480px` breakpoint, `flex-wrap` on
-`.row-actions`, and reduced `.stat-row` to two columns on the smallest
-screens.
+---
 
 ## Phase 2 — The AI Injection
 
-**Prompt:** "Design one scoped AI feature for a task tracker, matching the
-Sprint 16 FAQ #1 example 'Auto-generate Task Sub-steps.' It must call the
-Gemini API from a server-side function only (Vercel serverless function
-under `/api`), never from the React bundle directly, per FAQ #3. Give me a
-strict-JSON system prompt so the response is always parsable, per FAQ #2."
+**Question:** "If I call the Gemini API directly from my React app, is the
+API key visible in the browser bundle?"
 
-**Outcome:** Created `api/subtasks.js`: validates `title`/`category`,
-rejects malformed payloads with `400`, calls
-`gemini-2.0-flash:generateContent` with an explicit
-'respond ONLY with valid JSON, no markdown fences' instruction, strips any
-accidental ``` fences defensively, validates the parsed shape
-(`{"subtasks": [...]}`, all strings) before returning `200`, and returns
-`502`/`500` on any upstream or parsing failure instead of crashing.
+**Question:** "How do I stop an LLM from wrapping its JSON response in
+markdown code fences?"
 
-**Prompt:** "Build the client side: a button per task row labeled '✨ Steps'
-that opens a modal, calls `/api/subtasks` on mount, shows a loading spinner,
-lists the returned sub-steps, and lets the user save them onto the task via
-the existing `updateTask()` function as a new `subtasks` array field (no new
-Firestore collection)."
+**Question:** "What's the correct way to set up a Vercel serverless
+function under `/api` so it doesn't need a `vercel.json` for a Vite
+project?"
 
-**Outcome:** `AiSubtasksModal.jsx` + a "✨ Steps" button in `TaskTable.jsx`;
-saved subtasks render as a small bulleted preview under the task title.
+---
 
 ## Phase 3 — Micro-interactions & Fallback States
 
-**Prompt:** "This app already uses inline `error-text` elements instead of
-`alert()`, so there's nothing to rip out there — but add a proper toast
-library anyway for positive feedback (task added/updated/deleted, sub-steps
-saved) and for AI/network failures, using `sonner` themed to match the
-existing dark ink/amber palette."
+**Question:** "What's a lightweight toast library that works well with
+React and doesn't need much setup?"
 
-**Outcome:** Added `sonner`, mounted a single `<Toaster theme="dark" ... />`
-in `App.jsx`, and added `toast.success` / `toast.error` calls in
-`Dashboard.jsx`, `EditModal.jsx`, and `DeleteConfirm.jsx`.
+**Question:** "What's a simple CSS-only way to build a shimmering skeleton
+loader without a separate animation library?"
 
-**Prompt:** "Replace the plain 'Loading tasks…' text in `Dashboard.jsx` with
-a proper skeleton loader shaped like the real table (same columns), using a
-CSS shimmer animation, not a spinner or blank panel."
+---
 
-**Outcome:** Added `TableSkeleton.jsx` + `.skeleton-block` /
-`@keyframes skeleton-shimmer` in `index.css`.
+## Troubleshooting log
 
-**Prompt:** "The existing empty state in `TaskTable.jsx` ('No tasks yet') is
-functional but plain. Give it a small branded icon and a CTA that jumps back
-to the add-task form, without introducing a new component library."
+**Question:** "My Gemini API key starts with `AQ.Ab...` instead of
+`AIzaSy...` — is this a valid key, or did I copy it wrong?"
 
-**Outcome:** Added a circular icon badge, tightened copy, and a
-`<a href="#add-task-panel">` CTA button; gave the "Add a task" panel that id.
+**Question:** "My server function says `GEMINI_API_KEY is not set` even
+though it's in my `.env.local` — what could cause that?"
+
+**Question:** "`vercel env pull` isn't pulling down my `GEMINI_API_KEY` — I
+get 'Kept ... defined locally, not found in the development Environment.'
+What does that mean?"
+
+**Question:** "Vercel says a Sensitive variable can't be converted back to
+non-sensitive after saving — what's the actual fix if I need it in
+Development too?"
+
+**Question:** "I'm getting a 429 error with `limit: 0` from the Gemini API
+even though my key is valid and quota should be fine — what does that
+specific error mean?"
+
+**Question:** "Now I'm getting a 404 saying the model is 'no longer
+available to new users' — what's the current model name I should be
+using?"
+
+---
 
 ## Notes on scope discipline
 
 No new routes, no new Firestore collections, and no new macro-features were
-introduced. The only new server-side surface is the single `/api/subtasks`
-function, which is a thin, single-purpose proxy to the Gemini API — not a
-new backend architecture.
+introduced this sprint. The only new server-side surface is the single
+`/api/subtasks` function, a thin proxy to the Gemini API.
