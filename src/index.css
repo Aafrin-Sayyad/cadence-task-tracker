@@ -47,7 +47,7 @@ a { color: inherit; }
 
 .app-shell { display: flex; min-height: 100vh; }
 
-/* ---------- Sidebar ---------- */
+
 .sidebar {
   width: 220px;
   flex-shrink: 0;
@@ -70,7 +70,7 @@ a { color: inherit; }
 
 .brand span { color: var(--amber); }
 
-/* Hamburger button: hidden on desktop, shown only under the mobile breakpoint */
+
 .hamburger-btn {
   display: none;
   background: none;
@@ -133,7 +133,7 @@ a { color: inherit; }
 }
 .signout-btn:hover { color: var(--red); }
 
-/* ---------- Main ---------- */
+
 .main { flex: 1; padding: 32px 44px 60px; max-width: 1100px; }
 
 .page-header {
@@ -159,7 +159,7 @@ a { color: inherit; }
   font-family: var(--font-mono);
 }
 
-/* ---------- Cadence bar (signature element) ---------- */
+
 .cadence { display: flex; align-items: flex-end; gap: 3px; height: 40px; margin: 6px 0 28px; }
 
 .cadence-bar {
@@ -178,7 +178,7 @@ a { color: inherit; }
 
 .cadence-label { font-family: var(--font-mono); font-size: 11px; color: var(--paper-dim); margin-top: 6px; }
 
-/* ---------- Cards / grid ---------- */
+
 .stat-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -200,7 +200,7 @@ a { color: inherit; }
 
 .panel-title { font-family: var(--font-display); font-size: 18px; font-weight: 600; margin: 0 0 16px; }
 
-/* ---------- Buttons ---------- */
+
 .btn {
   font-size: 14px;
   font-weight: 500;
@@ -223,7 +223,7 @@ a { color: inherit; }
 
 .btn-sm { padding: 5px 10px; font-size: 12.5px; }
 
-/* ---------- Form ---------- */
+
 .form-grid { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 12px; align-items: end; }
 
 .field { display: flex; flex-direction: column; gap: 6px; }
@@ -243,7 +243,7 @@ a { color: inherit; }
 
 .error-text { color: var(--red); font-size: 13px; margin-top: 10px; }
 
-/* ---------- Table ---------- */
+
 .table-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
 
@@ -292,7 +292,7 @@ tr:last-child td { border-bottom: none; }
   font-size: 20px;
 }
 
-/* ---------- Skeleton loader ---------- */
+
 .skeleton-block {
   display: inline-block;
   height: 14px;
@@ -308,7 +308,7 @@ tr:last-child td { border-bottom: none; }
   100% { background-position: 0 50%; }
 }
 
-/* ---------- Spinner ---------- */
+
 .spinner {
   width: 14px;
   height: 14px;
@@ -322,7 +322,7 @@ tr:last-child td { border-bottom: none; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ---------- AI sub-steps ---------- */
+
 .ai-loading { display: flex; align-items: center; color: var(--paper-dim); font-size: 14px; padding: 20px 0; }
 
 .ai-subtask-list { list-style: none; padding: 0; margin: 0 0 4px; display: flex; flex-direction: column; gap: 8px; }
@@ -355,7 +355,7 @@ tr:last-child td { border-bottom: none; }
   color: var(--paper-dim);
 }
 
-/* ---------- Auth pages ---------- */
+
 .auth-shell {
   min-height: 100vh;
   display: flex;
@@ -378,7 +378,7 @@ tr:last-child td { border-bottom: none; }
   font-size: 13.5px; text-decoration: underline; text-underline-offset: 3px;
 }
 
-/* ---------- Modal ---------- */
+
 .modal-backdrop {
   position: fixed; inset: 0; background: #0a0b0fcc;
   display: flex; align-items: center; justify-content: center;

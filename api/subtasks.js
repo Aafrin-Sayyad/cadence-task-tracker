@@ -2,15 +2,13 @@ const GEMINI_MODEL = 'gemini-3.5-flash-lite';
 const MAX_TITLE_LENGTH = 200;
 
 export default async function handler(req, res) {
-  // ---- Method guard ----
+  
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
   }
 
-  // ---- Payload validation (this is what the Postman "malformed payload"
-  // demo is exercising: missing/empty/oversized title all get a clean 400,
-  // never a 500 or an unhandled crash). ----
+  
   const body = req.body || {};
   const { title, category } = body;
 
@@ -30,7 +28,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'AI is not configured on the server yet.' });
   }
 
-  // ---- Strict-JSON prompt (Sprint 16 FAQ #2) ----
+  
   const prompt = `You are an API. A student has a task titled "${title.trim()}"${
     category ? ` in the category "${category}"` : ''
   }. Break it into 3 to 5 short, concrete, actionable sub-steps a student could check off one by one.

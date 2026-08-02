@@ -1,6 +1,4 @@
-// Sprint 16 — Phase 3: Asynchronous UX.
-// Renders placeholder rows shaped like the real table so the layout doesn't
-// jump once data arrives, instead of a blank panel or a plain "Loading…" line.
+
 
 export default function TableSkeleton({ rows = 4 }) {
   return (
